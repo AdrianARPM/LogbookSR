@@ -209,6 +209,115 @@
     #toast.ok   { border-left: 3px solid #22c55e; }
     #toast.err  { border-left: 3px solid #ef4444; }
     #toast.info { border-left: 3px solid #f97316; }
+
+    /* ══════════════════════════════════════
+       PAGINATION & FIXED TABLE — NEW
+    ══════════════════════════════════════ */
+
+    /* Sticky filter bar */
+    .sticky-filter {
+      position: sticky; top: 0; z-index: 50;
+      background: #f7f6f3;
+      padding-top: 6px; padding-bottom: 6px;
+      border-bottom: 1px solid #e2e0db;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    }
+
+    /* Fixed-height scrollable table */
+    .table-fixed-wrap {
+      height: calc(100vh - 320px);
+      min-height: 380px;
+      max-height: 680px;
+      overflow-y: auto;
+      overflow-x: auto;
+      position: relative;
+    }
+
+    /* Sticky thead inside fixed container */
+    .data-table thead th {
+      position: sticky; top: 0; z-index: 10;
+      background: #fff;
+      box-shadow: 0 1px 0 #e2e0db;
+    }
+
+    /* Pagination bar */
+    .pagination-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px;
+      padding: 12px 18px;
+      border-top: 1px solid #e2e0db;
+      background: #fff;
+      border-radius: 0 0 16px 16px;
+    }
+    .page-info { font-size: 12px; color: #8a8a8a; }
+    .page-info strong { color: #1a1a1a; }
+    .page-btns { display: flex; gap: 4px; align-items: center; }
+    .page-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 34px; height: 34px; padding: 0 8px;
+      border: 1.5px solid #e2e0db; border-radius: 8px;
+      background: #fff; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+      color: #4a4a4a; transition: all .15s;
+    }
+    .page-btn:hover:not(:disabled) { border-color: #f97316; color: #f97316; background: rgba(249,115,22,.05); }
+    .page-btn.active { background: #f97316; border-color: #f97316; color: #fff; }
+    .page-btn:disabled { opacity: .35; cursor: not-allowed; }
+    .page-btn.ellipsis { border: none; cursor: default; color: #c0bcb5; min-width: 24px; }
+    .page-btn.ellipsis:hover { background: transparent; color: #c0bcb5; }
+
+    /* Per-page selector */
+    .per-page-wrap { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #8a8a8a; }
+    .per-page-sel {
+      background: #fff; border: 1.5px solid #e2e0db; border-radius: 7px;
+      font-family: 'DM Sans', sans-serif; font-size: 12px; color: #1a1a1a;
+      padding: 5px 10px; outline: none; cursor: pointer;
+    }
+    .per-page-sel:focus { border-color: #f97316; }
+
+    /* Jump to page */
+    .jump-wrap { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #8a8a8a; }
+    .jump-input {
+      width: 52px; text-align: center;
+      background: #fff; border: 1.5px solid #e2e0db; border-radius: 7px;
+      font-family: 'DM Sans', sans-serif; font-size: 12px; color: #1a1a1a;
+      padding: 5px 6px; outline: none;
+    }
+    .jump-input:focus { border-color: #f97316; }
+
+    /* Scroll-to-top FAB */
+    #fabTop {
+      position: fixed; bottom: 28px; right: 24px;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: #1a1a1a; color: #fff; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; box-shadow: 0 4px 16px rgba(0,0,0,.2);
+      opacity: 0; pointer-events: none;
+      transition: opacity .25s, transform .25s;
+      z-index: 100;
+    }
+    #fabTop.visible { opacity: 1; pointer-events: auto; }
+    #fabTop:hover { background: #f97316; transform: translateY(-2px); }
+    #fabTop:active { transform: scale(.93); }
+
+    /* Row count badge in table toolbar */
+    .tbl-toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 18px 10px; border-bottom: 1px solid #f0eee9;
+      flex-wrap: wrap; gap: 8px;
+    }
+    .tbl-count-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #f7f6f3; border: 1.5px solid #e2e0db;
+      border-radius: 20px; padding: 3px 12px;
+      font-size: 11px; font-weight: 600; color: #8a8a8a;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .tbl-count-badge span { color: #f97316; }
+
+    /* Highlighted row when searching */
+    tr.hl td { background: rgba(249,115,22,.06) !important; }
+  
   </style>
 </head>
 <body>
@@ -220,9 +329,9 @@
   <div class="max-w-7xl mx-auto px-5 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
     <div>
       <div class="flex items-center gap-3 mb-1">
-        <span class="text-3xl">🍞</span>
+        <span class="text-3xl">📦</span>
         <h1 class="font-display text-5xl text-white tracking-wide leading-none">
-          LOGBOOK <span class="text-brand">NIC</span>
+          LOGBOOK <span class="text-brand">LOGISTIK</span>
         </h1>
       </div>
       <p class="text-ink-muted text-sm tracking-widest uppercase ml-14">
@@ -254,7 +363,7 @@
 <!-- ═══════════════════════════════════════
      FILTER BAR
 ═══════════════════════════════════════ -->
-<div class="max-w-7xl mx-auto px-5 py-5">
+<div class="sticky-filter"><div class="max-w-7xl mx-auto px-5 py-3">
   <div class="bg-white border border-rule rounded-2xl p-5 shadow-sm">
     <div class="flex flex-wrap gap-3 items-end">
 
@@ -318,27 +427,48 @@
     <!-- Active filter chips -->
     <div id="filterChips" class="hidden flex-wrap gap-2 mt-4 pt-4 border-t border-rule"></div>
   </div>
-</div>
+</div></div>
 
 <!-- ═══════════════════════════════════════
-     RESULT META
+     TABLE (fixed height + pagination)
 ═══════════════════════════════════════ -->
-<div class="max-w-7xl mx-auto px-5 pb-3 flex items-center justify-between">
-  <p id="resultMeta" class="text-sm text-ink-muted"></p>
-  <div id="groupToggleWrap" class="hidden">
-    <label class="flex items-center gap-2 cursor-pointer select-none text-sm text-ink-soft">
-      <input type="checkbox" id="groupToggle" checked onchange="renderTable()" class="accent-brand w-4 h-4">
-      Kelompokkan per tanggal
-    </label>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════
-     TABLE
-═══════════════════════════════════════ -->
-<div class="max-w-7xl mx-auto px-5 pb-16">
+<div class="max-w-7xl mx-auto px-5 pb-10">
   <div class="bg-white border border-rule rounded-2xl shadow-sm overflow-hidden">
-    <div class="table-scroll">
+
+    <!-- Toolbar -->
+    <div class="tbl-toolbar">
+      <div class="flex items-center gap-3 flex-wrap">
+        <div class="tbl-count-badge">
+          <span id="filteredCount">0</span> / <span id="totalCount">0</span> data
+        </div>
+        <p id="resultMeta" class="text-sm text-ink-muted"></p>
+      </div>
+      <div class="flex items-center gap-4 flex-wrap">
+        <div id="groupToggleWrap" class="hidden">
+          <label class="flex items-center gap-2 cursor-pointer select-none text-sm text-ink-soft">
+            <input type="checkbox" id="groupToggle" checked onchange="renderTable()" class="accent-brand w-4 h-4">
+            Kelompokkan per tanggal
+          </label>
+        </div>
+        <div class="per-page-wrap">
+          Baris/hal:
+          <select class="per-page-sel" id="perPageSel" onchange="onPerPageChange()">
+            <option value="25">25</option>
+            <option value="50" selected>50</option>
+            <option value="100">100</option>
+            <option value="0">Semua</option>
+          </select>
+        </div>
+        <div class="jump-wrap">
+          Ke hal:
+          <input type="number" min="1" id="jumpInput" class="jump-input" placeholder="1">
+          <button class="page-btn" onclick="jumpToPage()" style="min-width:auto;padding:0 10px;font-size:12px">Go</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fixed-height scrollable table -->
+    <div class="table-fixed-wrap" id="tableWrap">
       <table class="data-table" id="mainTable">
         <thead>
           <tr>
@@ -361,8 +491,18 @@
         </tbody>
       </table>
     </div>
+
+    <!-- Pagination bar -->
+    <div class="pagination-bar" id="paginationBar" style="display:none">
+      <div class="page-info" id="pageInfo">Halaman 1 dari 1</div>
+      <div class="page-btns" id="pageBtns"></div>
+    </div>
+
   </div>
 </div>
+
+<!-- Scroll-to-top FAB -->
+<button id="fabTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Kembali ke atas">↑</button>
 
 <!-- Toast -->
 <div id="toast"></div>
@@ -376,8 +516,12 @@ const SHEET_ID  = '16PDjsICmnpuJyUyZBmvs7kuBzNKi17ItWKjdu_bPhQw';
 const SHEET_TAB = 'LOGBOOK';
 
 // ─── STATE ───────────────────────────────────────────────────
-let allData      = [];   // semua baris dari sheet (sudah parsed)
-let filtered     = [];   // setelah filter diterapkan
+let allData  = [];
+let filtered = [];
+
+// ─── PAGINATION STATE ────────────────────────────────────────
+let currentPage = 1;
+let perPage     = 50;   // rows per page; 0 = show all
 
 // ─── TOAST ───────────────────────────────────────────────────
 let toastTimer;
@@ -396,11 +540,11 @@ async function loadData() {
   try {
     const res  = await fetch(url);
     const text = await res.text();
-    // Strip JSONP wrapper: /*O_o*/\ngoogle.visualization.Query.setResponse(...);\n
     const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);?\s*$/)[1]);
     if (json.status !== 'ok') throw new Error(json.errors?.[0]?.message || 'Sheet error');
     allData = parseGvizTable(json.table);
     document.getElementById('lastSync').textContent = 'Diperbarui: ' + new Date().toLocaleTimeString('id-ID');
+    document.getElementById('totalCount').textContent = allData.length;
     populateFilterOptions();
     applyFilters();
     toast(`${allData.length} data berhasil dimuat`, 'ok');
@@ -432,7 +576,7 @@ function parseGvizTable(table) {
         ? (cell.f !== undefined && cell.f !== null ? cell.f.toString().trim() : cell.v.toString().trim())
         : '';
     });
-    if (!r['ID'] && !r['NAMA DRIVER']) continue; // skip empty rows
+    if (!r['ID'] && !r['NAMA DRIVER']) continue;
     rows.push(r);
   }
   return rows;
@@ -440,7 +584,6 @@ function parseGvizTable(table) {
 
 // ─── POPULATE FILTER DROPDOWNS ───────────────────────────────
 function populateFilterOptions() {
-  // Years
   const years   = [...new Set(allData.map(r => extractYear(r.TANGGAL)).filter(Boolean))].sort().reverse();
   const ySelect = document.getElementById('fYear');
   const curYear = ySelect.value;
@@ -452,7 +595,6 @@ function populateFilterOptions() {
     ySelect.appendChild(o);
   });
 
-  // Drivers
   const drivers   = [...new Set(allData.map(r => r['NAMA DRIVER']).filter(Boolean))].sort();
   const dSelect   = document.getElementById('fDriver');
   const curDriver = dSelect.value;
@@ -464,7 +606,6 @@ function populateFilterOptions() {
     dSelect.appendChild(o);
   });
 
-  // Plats
   const plats   = [...new Set(allData.map(r => r['PLAT KENDARAAN']).filter(Boolean))].sort();
   const pSelect = document.getElementById('fPlat');
   const curPlat = pSelect.value;
@@ -478,18 +619,15 @@ function populateFilterOptions() {
 }
 
 // ─── DATE HELPERS ────────────────────────────────────────────
-// Tanggal format: dd/MM/yyyy
 function extractDay(d)   { return d ? d.substring(0,2)  : ''; }
 function extractMonth(d) { return d ? d.substring(3,5)  : ''; }
 function extractYear(d)  { return d ? d.substring(6,10) : ''; }
 
-// Untuk sort: yyyy-mm-dd
 function sortKey(d) {
   if (!d || d.length < 10) return '';
   return `${d.substring(6,10)}-${d.substring(3,5)}-${d.substring(0,2)}`;
 }
 
-// Human-readable tanggal
 const HARI_ID  = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
 const BULAN_ID = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 function formatTanggal(d) {
@@ -523,20 +661,19 @@ function getStatus(row) {
   if (row['JAM LOADING'] && row['JAM LOADING'].trim() !== '') return 'loading';
   return 'masuk';
 }
-const STATUS_LABEL = { masuk:'Masuk',loading:'Loading',keluar:'Keluar' };
+const STATUS_LABEL = { masuk:'Masuk', loading:'Loading', keluar:'Keluar' };
 
 // ─── APPLY FILTERS ───────────────────────────────────────────
 function applyFilters() {
-  const fDate   = document.getElementById('fDate').value;       // yyyy-MM-dd
-  const fMonth  = document.getElementById('fMonth').value;      // MM
-  const fYear   = document.getElementById('fYear').value;       // yyyy
+  const fDate   = document.getElementById('fDate').value;
+  const fMonth  = document.getElementById('fMonth').value;
+  const fYear   = document.getElementById('fYear').value;
   const fDriver = document.getElementById('fDriver').value;
   const fPlat   = document.getElementById('fPlat').value;
 
   filtered = allData.filter(r => {
     const d = r.TANGGAL || '';
     if (fDate) {
-      // fDate = "yyyy-MM-dd", d = "dd/MM/yyyy"
       const [fy,fm,fd] = fDate.split('-');
       if (extractDay(d) !== fd || extractMonth(d) !== fm || extractYear(d) !== fy) return false;
     }
@@ -549,10 +686,16 @@ function applyFilters() {
 
   updateStats(filtered);
   renderChips(fDate, fMonth, fYear, fDriver, fPlat);
+
+  // Reset to page 1 on new filter
+  currentPage = 1;
   renderTable();
 
+  document.getElementById('filteredCount').textContent = filtered.length;
   document.getElementById('resultMeta').textContent =
-    `Menampilkan ${filtered.length} dari ${allData.length} data`;
+    filtered.length < allData.length
+      ? `Filter aktif — ${filtered.length} dari ${allData.length} data`
+      : '';
   const gw = document.getElementById('groupToggleWrap');
   gw.className = filtered.length ? 'flex' : 'hidden';
 }
@@ -590,10 +733,10 @@ function updateStats(data) {
     </div>`;
 }
 
-// ─── RENDER TABLE ────────────────────────────────────────────
+// ─── RENDER TABLE (with pagination) ──────────────────────────
 function renderTable() {
-  const tbody  = document.getElementById('tableBody');
-  const group  = document.getElementById('groupToggle').checked;
+  const tbody = document.getElementById('tableBody');
+  const group = document.getElementById('groupToggle').checked;
 
   if (!filtered.length) {
     tbody.innerHTML = `
@@ -604,26 +747,43 @@ function renderTable() {
           <p class="text-sm text-ink-muted">Coba ubah filter pencarian</p>
         </div>
       </td></tr>`;
+    document.getElementById('paginationBar').style.display = 'none';
     return;
   }
 
-  // Sort by tanggal ASC, then jamMasuk ASC
+  // Sort: tanggal ASC, then jamMasuk ASC
   const sorted = [...filtered].sort((a,b) => {
     const dk = sortKey(a.TANGGAL).localeCompare(sortKey(b.TANGGAL));
     if (dk !== 0) return dk;
     return (a['JAM MASUK']||'').localeCompare(b['JAM MASUK']||'');
   });
 
+  // Pagination slice
+  const total      = sorted.length;
+  const totalPages = perPage === 0 ? 1 : Math.ceil(total / perPage);
+  if (currentPage > totalPages) currentPage = totalPages;
+  if (currentPage < 1) currentPage = 1;
+
+  const start  = perPage === 0 ? 0 : (currentPage - 1) * perPage;
+  const end    = perPage === 0 ? total : Math.min(start + perPage, total);
+  const pageData = sorted.slice(start, end);
+
+  // Global numbering offset
+  const offset = start;
+
+  let html = '';
+  let no   = offset + 1;
+
   if (group) {
-    // Kelompokkan per tanggal
     const groups = {};
-    sorted.forEach(r => {
+    // We group only the CURRENT PAGE slice (keeps context clear)
+    // But we number rows globally
+    pageData.forEach(r => {
       const k = r.TANGGAL || 'Tanggal Kosong';
       if (!groups[k]) groups[k] = [];
       groups[k].push(r);
     });
 
-    let html = ''; let no = 1;
     for (const [tanggal, rows] of Object.entries(groups)) {
       html += `
         <tr class="group-row">
@@ -634,12 +794,101 @@ function renderTable() {
         </tr>`;
       rows.forEach(r => { html += buildRow(r, no++); });
     }
-    tbody.innerHTML = html;
   } else {
-    tbody.innerHTML = sorted.map((r,i) => buildRow(r, i+1)).join('');
+    pageData.forEach(r => { html += buildRow(r, no++); });
   }
+
+  tbody.innerHTML = html;
+
+  // Scroll table back to top on page change
+  document.getElementById('tableWrap').scrollTop = 0;
+
+  // Render pagination controls
+  renderPagination(currentPage, totalPages, total, start, end);
 }
 
+// ─── PAGINATION CONTROLS ─────────────────────────────────────
+function renderPagination(page, totalPages, total, start, end) {
+  const bar = document.getElementById('paginationBar');
+
+  if (totalPages <= 1 && perPage !== 0) {
+    bar.style.display = 'none';
+    return;
+  }
+  bar.style.display = 'flex';
+
+  // Info text
+  const infoEnd = Math.min(end, total);
+  document.getElementById('pageInfo').innerHTML =
+    `Menampilkan <strong>${start+1}–${infoEnd}</strong> dari <strong>${total}</strong> data &nbsp;·&nbsp; Halaman <strong>${page}</strong> dari <strong>${totalPages}</strong>`;
+
+  // Button array with ellipsis logic
+  const btns  = document.getElementById('pageBtns');
+  btns.innerHTML = '';
+
+  const mkBtn = (label, p, active=false, disabled=false, ellipsis=false) => {
+    const b = document.createElement('button');
+    b.className = 'page-btn' + (active ? ' active' : '') + (ellipsis ? ' ellipsis' : '');
+    b.textContent = label;
+    b.disabled = disabled || ellipsis;
+    if (!disabled && !ellipsis) b.onclick = () => goToPage(p);
+    btns.appendChild(b);
+  };
+
+  // Prev
+  mkBtn('←', page-1, false, page<=1);
+
+  // Page numbers with ellipsis
+  const pages = buildPageRange(page, totalPages);
+  pages.forEach(p => {
+    if (p === '…') mkBtn('…', 0, false, false, true);
+    else mkBtn(String(p), p, p === page);
+  });
+
+  // Next
+  mkBtn('→', page+1, false, page>=totalPages);
+}
+
+function buildPageRange(current, total) {
+  if (total <= 7) return Array.from({length:total}, (_,i)=>i+1);
+  const pages = [];
+  if (current <= 4) {
+    for (let i=1; i<=5; i++) pages.push(i);
+    pages.push('…'); pages.push(total);
+  } else if (current >= total-3) {
+    pages.push(1); pages.push('…');
+    for (let i=total-4; i<=total; i++) pages.push(i);
+  } else {
+    pages.push(1); pages.push('…');
+    for (let i=current-1; i<=current+1; i++) pages.push(i);
+    pages.push('…'); pages.push(total);
+  }
+  return pages;
+}
+
+function goToPage(p) {
+  currentPage = p;
+  renderTable();
+}
+
+function onPerPageChange() {
+  perPage = parseInt(document.getElementById('perPageSel').value, 10);
+  currentPage = 1;
+  renderTable();
+}
+
+function jumpToPage() {
+  const inp = document.getElementById('jumpInput');
+  const p   = parseInt(inp.value, 10);
+  if (!p || p < 1) return;
+  const sorted    = [...filtered];
+  const totalPages = perPage === 0 ? 1 : Math.ceil(sorted.length / perPage);
+  currentPage = Math.min(Math.max(1, p), totalPages);
+  renderTable();
+  inp.value = '';
+}
+
+// ─── BUILD ROW ───────────────────────────────────────────────
 function buildRow(r, no) {
   const status = getStatus(r);
   const dur    = diffMins(r['JAM MASUK'], r['JAM KELUAR']);
@@ -698,8 +947,7 @@ function filterChipRemove(i) { document.getElementById('filterChips')._chips[i][
 
 function resetFilters() {
   ['fDate','fMonth','fYear','fDriver','fPlat'].forEach(id => {
-    const el = document.getElementById(id);
-    el.value = '';
+    document.getElementById(id).value = '';
   });
   applyFilters();
 }
@@ -708,7 +956,6 @@ function resetFilters() {
 function exportExcel() {
   if (!filtered.length) { toast('Tidak ada data untuk diekspor','err'); return; }
 
-  // Build export rows (tanpa kolom LAT/LNG untuk keterbacaan, bisa ditambah)
   const headers = ['No','Nama Driver','Plat Kendaraan','Tanggal','Jam Masuk','Jam Loading','Jam Keluar','Status','Durasi (menit)'];
   const rows    = filtered.map((r,i) => {
     const s   = getStatus(r);
@@ -728,30 +975,27 @@ function exportExcel() {
 
   const wb  = XLSX.utils.book_new();
   const ws  = XLSX.utils.aoa_to_sheet([headers, ...rows]);
-
-  // Column widths
   ws['!cols'] = [4,22,16,16,11,11,11,12,14].map(w => ({ wch: w }));
-
-  // Style header row (XLSX.js basic)
-  const range = XLSX.utils.decode_range(ws['!ref']);
-  for (let c = range.s.c; c <= range.e.c; c++) {
-    const addr = XLSX.utils.encode_cell({r:0, c});
-    if (!ws[addr]) continue;
-    ws[addr].s = { font:{bold:true}, fill:{fgColor:{rgb:'1A1A1A'}}, font:{bold:true,color:{rgb:'FFFFFF'}} };
-  }
-
   XLSX.utils.book_append_sheet(wb, ws, 'Logbook');
 
-  const fDate   = document.getElementById('fDate').value;
-  const fMonth  = document.getElementById('fMonth').value;
-  const fYear   = document.getElementById('fYear').value;
-  const suffix  = fDate ? fDate : (fMonth ? `${fMonth}-${fYear||'all'}` : (fYear||'all'));
+  const fDate  = document.getElementById('fDate').value;
+  const fMonth = document.getElementById('fMonth').value;
+  const fYear  = document.getElementById('fYear').value;
+  const suffix = fDate ? fDate : (fMonth ? `${fMonth}-${fYear||'all'}` : (fYear||'all'));
   XLSX.writeFile(wb, `logbook_${suffix}_${Date.now()}.xlsx`);
   toast(`${filtered.length} data berhasil diekspor ✓`, 'ok');
 }
 
+// ─── SCROLL-TO-TOP FAB ───────────────────────────────────────
+window.addEventListener('scroll', () => {
+  const fab = document.getElementById('fabTop');
+  if (window.scrollY > 200) fab.classList.add('visible');
+  else fab.classList.remove('visible');
+});
+
 // ─── INIT ────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', loadData);
 </script>
+
 </body>
 </html>
